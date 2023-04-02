@@ -1,0 +1,49 @@
+.layout {
+  .slider {
+    .logo {
+      height: 64px;
+      color: #ffffff;
+      text-align: center;
+    }
+  }
+  .layout {
+    .header {
+      background-color: #ffffff;
+      line-height: 64px;
+      .title {
+        font-weight: bold;
+      }
+    }
+    .content {
+      margin: 70px auto;
+      padding: 8px;
+    }
+    .footer {
+      background-color: #ffffff;
+      text-align: center;
+    }
+  }
+  &.fixed {
+    .slider {
+      position: fixed;
+      left: 0;
+      height: 100vh;
+    }
+    .layout {
+      margin-left: 200px;
+      .header {
+        position: fixed;
+        z-index: 1;
+        width: calc(100% - 200px);
+        .title {
+          font-size: 20px;
+        }
+      }
+      .footer {
+        position: fixed;
+        bottom: 0;
+        width: calc(100% - 200px);
+      }
+    }
+  }
+}

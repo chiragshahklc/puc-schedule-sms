@@ -1,0 +1,17 @@
+{
+  "name": "puc-schedule-sms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "concurrently \"npm --prefix client run build\" \"npm --prefix server run build\"",
+    "dev": "concurrently \"npm --prefix client run start\" \"npm --prefix server run dev\"",
+    "start": "npm --prefix server run start"
+  },
+  "keywords": [],
+  "author": "Chirag Shah",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^6.2.0"
+  }
+}
