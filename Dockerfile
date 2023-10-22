@@ -9,7 +9,7 @@ RUN npm ci
 RUN npm run build
 
 # builder stage
-FROM node:14.17.0 AS server-builder
+FROM node:16.16.0 AS server-builder
 ARG DATABASE_URL
 ENV DATABASE_URL=${DATABASE_URL}
 WORKDIR /usr/src/app
@@ -20,7 +20,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # production builder stage
-FROM node:14.17.0-alpine AS prod-builder
+FROM node:16.16.0-alpine AS prod-builder
 WORKDIR /app
 ENV NODE_ENV=production
 COPY /server/package*.json ./
@@ -29,7 +29,7 @@ RUN npm ci --only=production
 RUN npx prisma generate
 
 # production stage
-FROM node:14.17.0-alpine
+FROM node:16.16.0-alpine
 WORKDIR /app/client
 COPY --from=client-builder /usr/src/app/build ./build
 WORKDIR /app/server

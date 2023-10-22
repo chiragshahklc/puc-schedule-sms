@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  puc-schedule-sms:
+    container_name: "puc-schedule-sms"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      # web
+      - traefik.http.routers.untpuc-http.rule=Host(`untpuc.localhost`)
+      - traefik.http.routers.untpuc-http.entrypoints=web
+      - traefik.http.services.untpuc-http.loadbalancer.server.port=3110
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL
+      - PORT=3110
+      - SMS_API_KEY
+      - SMS_SENDER=UNTPUU
+      - TELEGRAM_BOT_TOKEN
+      - JWT_SECRET
+    networks:
+      - internal-net
+    restart: unless-stopped
+networks:
+  internal-net:
+    name: fury-net
+    external: true
