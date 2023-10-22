@@ -12,6 +12,6 @@
   "author": "Chirag Shah",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^6.5.1"
   }
 }

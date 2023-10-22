@@ -23,6 +23,13 @@ app.use(
   })
 )
 
+app.get("/healthcheck", (req, res) => {
+  res.status(httpStatus.OK).json({
+    status: httpStatus.OK,
+    message: "Running",
+  })
+})
+
 app.get("/api", (req: Request, res: Response) => {
   res.status(httpStatus.OK).send("API Working Successfully")
 })

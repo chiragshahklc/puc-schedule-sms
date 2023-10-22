@@ -18,10 +18,11 @@ const httpStatus = {
 
 const formatMsg = (date: string, vehicleNo: string) => {
   try {
-    // `Your PUC expire on 13 Mar 2020. Your PUC vehicle no is GJ AA 1111. Please renew your vehicle PUC before due date. From - Unnati PUC, Bardoli. MO-9427673606`
-    const str = `Your PUC expire on ${dayjs(date).format(
-      "DD MMM YYYY"
-    )}. Your PUC vehicle no is ${vehicleNo}. Please renew your vehicle PUC before due date. From - Unnati PUC, Bardoli. MO-9427673606`
+    // `Your PUC expires on 13 Mar 2020. Your PUC vehicle no is GJ AA 1111. Please renew your vehicle PUC before due date. From - Unnati PUC, Bardoli. MO-9427673606`
+    // Your PUC expires on {#var#}. Your PUC vehicle no is {#var#}. Please renew your vehicle PUC before due date. From - Unnati PUC, Bardoli. MO-9427673606
+    const expiryDate = dayjs(date).format("DD MMM YYYY")
+
+    const str = `Your PUC expires on ${expiryDate}. Your PUC vehicle no is ${vehicleNo}. Please renew your vehicle PUC before due date. From - Unnati PUC, Bardoli. MO-9427673606`
     return str
   } catch (error) {
     console.error(error)
