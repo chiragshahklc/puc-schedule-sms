@@ -1,5 +1,5 @@
 # builder stage - client
-FROM node:14.17.0 as client-builder
+FROM node:16.16.0 as client-builder
 ENV NODE_ENV=production
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
@@ -20,7 +20,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # production builder stage
-FROM node:16.16.0-alpine AS prod-builder
+FROM node:16.16.0 AS prod-builder
 WORKDIR /app
 ENV NODE_ENV=production
 COPY /server/package*.json ./
@@ -29,7 +29,8 @@ RUN npm ci --only=production
 RUN npx prisma generate
 
 # production stage
-FROM node:16.16.0-alpine
+FROM node:16.16.0-slim
+RUN apt-get update && apt-get install -y openssl
 WORKDIR /app/client
 COPY --from=client-builder /usr/src/app/build ./build
 WORKDIR /app/server
