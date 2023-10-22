@@ -50,7 +50,7 @@ cron.schedule(
         }
 
         await telegram.sendMessage(
-          "PUC Scheduled messages sent.\n\nTotal message sent: " +
+          "PUC Scheduled messages sent.\n\nTotal message tried sent: " +
             scheduledMsgs.length
         )
       }
@@ -89,9 +89,26 @@ cron.schedule(
         }
       }
 
+      const todayMsgs = await prisma.sent_msg.findMany({
+        where: {
+          sentTime: {
+            gte: dayjs().add(-24, "h").toISOString(),
+          },
+        },
+      })
+      const msgCount = todayMsgs.reduce((prev, curr) => {
+        const msgStatus = curr.msgStatus || "other"
+        return {
+          ...prev,
+          [msgStatus]: prev[msgStatus] ? prev[msgStatus] + 1 : 1,
+        }
+      }, {} as any)
+      const msgCountString = Object.entries(msgCount)
+        .map((entry) => entry.join(" : "))
+        .join("\n")
+
       await telegram.sendMessage(
-        "PUC Scheduled messages status updated.\n\nTotal message status updated: " +
-          awaitedMsgs.length
+        "PUC Scheduled messages status updated.\n\n" + msgCountString
       )
       console.log("Update sent msg status cron job done")
     } catch (error) {
