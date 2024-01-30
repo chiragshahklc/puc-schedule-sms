@@ -35,6 +35,7 @@ jobs:
           pwd
           echo "IMAGE_NAME: $IMAGE_NAME"
           echo ${{ env.IMAGE_NAME }}
+          echo ${{ env.HOST_URL }}
           echo confirmed!
       - name: Build docker image
         run: |
