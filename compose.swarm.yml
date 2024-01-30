@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  puc-schedule-sms:
+    # container_name: "puc-schedule-sms"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+      update_config:
+        delay: 10s
+        order: stop-first
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=swarm-network
+        - traefik.docker.lbswarm=true
+        # web
+        - traefik.http.routers.untpuc-http.rule=Host(`${HOST_URL}`)
+        - traefik.http.routers.untpuc-http.entrypoints=web
+        - traefik.http.routers.untpuc-http.middlewares=force-https
+        # websecure
+        - traefik.http.routers.untpuc-https.rule=Host(`${HOST_URL}`)
+        - traefik.http.routers.untpuc-https.entrypoints=websecure
+        - traefik.http.services.untpuc-https.loadbalancer.server.port=3110
+        - traefik.http.routers.untpuc-https.tls=true
+        - traefik.http.routers.untpuc-https.tls.certresolver=leprod
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL
+      - PORT=3110
+      - SMS_API_KEY
+      - SMS_SENDER=UNTPUU
+      - TELEGRAM_BOT_TOKEN
+      - JWT_SECRET
+    networks:
+      - ingress
+    # restart: unless-stopped
+networks:
+  ingress:
+    name: swarm-network
+    external: true
