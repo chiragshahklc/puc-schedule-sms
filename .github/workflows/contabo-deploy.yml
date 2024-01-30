@@ -20,7 +20,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: contabo
     env:
-      IMAGE_NAME: ${{ format('puc-schedule-sms:{0}', GITHUB_SHA) }}
+      IMAGE_NAME: ${{ format('puc-schedule-sms:{0}', github.sha) }}
     defaults:
       run:
         working-directory: ./
