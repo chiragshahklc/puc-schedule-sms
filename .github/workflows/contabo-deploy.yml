@@ -19,6 +19,8 @@ jobs:
   deploy:
     # The type of runner that the job will run on
     runs-on: contabo
+    env:
+      IMAGE_NAME: ${{ format('puc-schedule-sms:{0}', GITHUB_SHA) }}
     defaults:
       run:
         working-directory: ./
@@ -32,6 +34,9 @@ jobs:
         run: |
           pwd
           echo confirmed!
+      - name: Build docker image
+        run: /
+          docker build -t $IMAGE_NAME .
       - name: Deploy to docker swarm
         env: # Or as an environment variable
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
