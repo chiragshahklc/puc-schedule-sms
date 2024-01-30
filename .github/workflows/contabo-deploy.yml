@@ -33,11 +33,11 @@ jobs:
       - name: Confirm current directory is root directory
         run: |
           pwd
-          echo $IMAGE_NAME
+          echo "IMAGE_NAME: $IMAGE_NAME"
           echo ${{ env.IMAGE_NAME }}
           echo confirmed!
       - name: Build docker image
-        run: /
+        run: |
           docker build -t $IMAGE_NAME .
       - name: Deploy to docker swarm
         env: # Or as an environment variable
