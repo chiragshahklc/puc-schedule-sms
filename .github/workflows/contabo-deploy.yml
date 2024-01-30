@@ -35,7 +35,7 @@ jobs:
           pwd
           echo "IMAGE_NAME: $IMAGE_NAME"
           echo ${{ env.IMAGE_NAME }}
-          echo ${{ env.HOST_URL }}
+          echo ${{ vars.HOST_URL }}
           echo confirmed!
       - name: Build docker image
         run: |
@@ -46,7 +46,7 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SMS_API_KEY: ${{ secrets.SMS_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          HOST_URL: ${{ env.HOST_URL }}
+          HOST_URL: ${{ vars.HOST_URL }}
         run: |
           docker stack deploy --compose-file=compose.swarm.yml puc-schedule-sms
       - name: Verify deployment
