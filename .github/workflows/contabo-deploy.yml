@@ -21,9 +21,9 @@ jobs:
     runs-on: contabo
     env:
       IMAGE_NAME: ${{ format('puc-schedule-sms:{0}', github.sha) }}
-    defaults:
-      run:
-        working-directory: ./
+    # defaults:
+    #   run:
+    #     working-directory: ./
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -33,6 +33,8 @@ jobs:
       - name: Confirm current directory is root directory
         run: |
           pwd
+          echo $IMAGE_NAME
+          echo ${{ env.IMAGE_NAME }}
           echo confirmed!
       - name: Build docker image
         run: /

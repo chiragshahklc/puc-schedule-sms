@@ -2,6 +2,7 @@ version: "3.8"
 services:
   puc-schedule-sms:
     # container_name: "puc-schedule-sms"
+    image: ${IMAGE_NAME}
     build:
       context: .
       dockerfile: Dockerfile
